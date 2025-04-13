@@ -1,6 +1,6 @@
-// js/resourceManager.js - Version 2.2.0 (11/04/2025)
+// js/resourceManager.js - Version 2.2.1 (12/04/2025)
 // Gestionnaire centralisé des ressources pour Test Your French
-// Chargement à la demande des thèmes et quiz avec mise en cache
+// Adapté pour structure de dossiers simplifiée
 
 class ResourceManager {
   constructor() {
@@ -11,7 +11,7 @@ class ResourceManager {
       quizzes: {}        // Quiz individuels (par thème)
     };
     
-    console.log("ResourceManager initialisé (v2.2.0)");
+    console.log("ResourceManager initialisé (v2.2.1) - Structure simplifiée");
   }
 
   // ----- Métadonnées -----
@@ -56,14 +56,26 @@ class ResourceManager {
     }
     
     try {
-      const response = await fetch(`js/data/themes/theme_${themeId}.json`);
-      if (!response.ok) {
-        throw new Error(`Erreur lors du chargement du thème ${themeId}: ${response.status}`);
+      // Dans la structure simplifiée, nous générons les données du thème
+      // à partir des métadonnées et des quizzes disponibles
+      const metadata = await this.loadMetadata();
+      const theme = metadata.themes.find(theme => theme.id === themeId);
+      
+      if (!theme) {
+        throw new Error(`Thème ${themeId} non trouvé dans les métadonnées`);
       }
       
-      const themeData = await response.json();
+      // Créer un objet thème simplifié
+      const themeData = {
+        id: themeId,
+        name: theme.name,
+        description: theme.description,
+        icon: theme.icon,
+        quizzes: theme.quizzes
+      };
+      
       this.cache.themes[themeId] = themeData;
-      console.log(`Thème ${themeId} chargé`, themeData);
+      console.log(`Thème ${themeId} chargé depuis les métadonnées`, themeData);
       return themeData;
     } catch (error) {
       console.error(`Échec du chargement du thème ${themeId}:`, error);
@@ -105,7 +117,8 @@ class ResourceManager {
     }
     
     try {
-      const response = await fetch(`js/data/quizzes/theme_${themeId}/quiz_${quizId}.json`);
+      // Chemin simplifié pour la structure de dossiers actuelle
+      const response = await fetch(`js/data/quizzes/theme-${themeId}/quiz_${quizId}.json`);
       if (!response.ok) {
         throw new Error(`Erreur lors du chargement du quiz ${quizId} (thème ${themeId}): ${response.status}`);
       }
