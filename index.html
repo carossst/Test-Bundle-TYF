@@ -147,6 +147,39 @@
     <!-- Scripts modulaires -->
     <!-- 'type="module"' est essentiel pour utiliser import/export dynamique -->
     <script type="module" src="js/main.js"></script>
-
+<!-- Add this right before the closing </body> tag in your index.html -->
+<script>
+  // Simple direct test that bypasses module system
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log("Direct script loaded!");
+    
+    // Get the button
+    var exploreButton = document.getElementById('explore-themes-btn');
+    
+    // Add direct click handler
+    if (exploreButton) {
+      console.log("Found button directly:", exploreButton);
+      
+      exploreButton.onclick = function() {
+        console.log("Button clicked directly!");
+        
+        // Get screens
+        var welcomeScreen = document.getElementById('welcome-screen');
+        var themeScreen = document.getElementById('theme-selection');
+        
+        // Toggle visibility
+        if (welcomeScreen && themeScreen) {
+          welcomeScreen.classList.add('hidden');
+          themeScreen.classList.remove('hidden');
+          console.log("Screen toggled directly!");
+        } else {
+          console.error("Screens not found");
+        }
+      };
+    } else {
+      console.error("Button not found directly");
+    }
+  });
+</script>
 </body>
 </html>
