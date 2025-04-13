@@ -1,0 +1,101 @@
+// js/themeController.js - Version 2.2.1 (12/04/2025)
+// Contrôleur intermédiaire pour la gestion des thèmes
+// Coordonne les interactions entre l'UI et le ResourceManager
+// Gère le cycle de vie des données de thème
+
+import resourceManager from './resourceManager.js';
+import storage from './storage.js';
+
+class ThemeController {
+  constructor() {
+    this.currentThemeId = null;
+    this.themeCache = {};
+    
+    console.log("ThemeController initialisé (v2.2.1)");
+  }
+  
+  /**
+   * Récupère les métadonnées de tous les thèmes
+   * @returns {Promise<Object>} Métadonnées des thèmes
+   */
+  async getThemesMetadata() {
+    try {
+      return await resourceManager.loadMetadata();
+    } catch (error) {
+      console.error("Erreur lors du chargement des métadonnées des thèmes:", error);
+      throw error;
+    }
+  }
+  
+  /**
+   * Charge les données complètes d'un thème spécifique
+   * @param {number} themeId - ID du thème à charger
+   * @returns {Promise<Object>} Données complètes du thème
+   */
+  async loadTheme(themeId) {
+    // Convertir en nombre si c'est une chaîne
+    const id = Number(themeId);
+    
+    // Vérifier si le thème est déjà en cache
+    if (this.themeCache[id]) {
+      console.log(`Utilisation du thème en cache: ${id}`);
+      this.currentThemeId = id;
+      return this.themeCache[id];
+    }
+    
+    try {
+      // Charger les données du thème
+      const themeData = await resourceManager.getTheme(id);
+      
+      // Mettre en cache les données
+      this.themeCache[id] = themeData;
+      this.currentThemeId = id;
+      
+      // Précharger les quiz en arrière-plan
+      this.preloadQuizzes(id);
+      
+      return themeData;
+    } catch (error) {
+      console.error(`Erreur lors du chargement du thème ${id}:`, error);
+      throw error;
+    }
+  }
+  
+  /**
+   * Précharge les données de quiz pour un thème en arrière-plan
+   * @param {number} themeId - ID du thème
+   */
+  async preloadQuizzes(themeId) {
+    try {
+      await resourceManager.preloadThemeQuizzes(themeId);
+      console.log(`Quiz du thème ${themeId} préchargés avec succès`);
+    } catch (error) {
+      // Ne pas propager l'erreur, c'est une optimisation en arrière-plan
+      console.warn(`Échec du préchargement des quiz pour le thème ${themeId}:`, error);
+    }
+  }
+  
+  /**
+   * Récupère les données de progression de l'utilisateur
+   * @returns {Promise<Object>} Données de progression
+   */
+  async getProgress() {
+    try {
+      return await storage.getProgress();
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données de progression:", error);
+      // Retourner un objet de progression vide en cas d'erreur
+      return { themes: {} };
+    }
+  }
+  
+  /**
+   * Nettoie le cache des thèmes
+   */
+  clearCache() {
+    this.themeCache = {};
+    console.log("Cache du contrôleur de thèmes vidé");
+  }
+}
+
+export default ThemeController;
