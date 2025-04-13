@@ -1,0 +1,32 @@
+{
+  "id": 101,
+  "themeId": 1,
+  "name": "Writing and Reading Café",
+  "description": "Test your writing and reading skills in a café environment.",
+  "version": "2.2.0",
+  "lastUpdated": "11/04/2025",
+  "questions": [
+    {
+      "question": "How do you write 'a coffee, please' in French?",
+      "options": [
+        "Un café, s'il vous plaît",
+        "Une café, s'il vous plaît",
+        "Le café, merci",
+        "Café pour moi"
+      ],
+      "correctAnswer": "Un café, s'il vous plaît",
+      "explanation": "'Un café, s'il vous plaît' is correct."
+    },
+    {
+      "question": "Read the sign: 'Terrasse Chauffée'. What does it mean?",
+      "options": [
+        "Heated Terrace",
+        "Closed Terrace",
+        "Terrace with View",
+        "Terrace Reserved"
+      ],
+      "correctAnswer": "Heated Terrace",
+      "explanation": "'Chauffée' means 'heated'."
+    }
+  ]
+}

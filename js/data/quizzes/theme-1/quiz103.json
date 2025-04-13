@@ -1,0 +1,27 @@
+{
+  "id": 103,
+  "themeId": 1,
+  "name": "Listening Café",
+  "description": "Improve your listening comprehension in café environments.",
+  "version": "2.2.0",
+  "lastUpdated": "11/04/2025",
+  "questions": [
+    {
+      "question": "Listen to the audio. What does the person want to order?",
+      "options": ["Un café", "Un thé", "Un chocolat chaud", "Une limonade"],
+      "correctAnswer": "Un café",
+      "explanation": "The person is ordering 'un café' (a coffee).",
+      "audio": "audio/TYF_Lead_6.mp3",
+      "type": "audio"
+    },
+    {
+      "question": "Listen to this order. What size coffee does the customer want?",
+      "options": ["Small", "Medium", "Large", "The size isn't mentioned"],
+      "correctAnswer": "The size isn't mentioned",
+      "explanation": "In France, coffee typically comes in standard sizes, and customers rarely specify the size when ordering.",
+      "audio": "audio/TYF_Lead_7.mp3",
+      "type": "audio"
+    }
+    // 8 other questions would be added here in the complete version
+  ]
+}

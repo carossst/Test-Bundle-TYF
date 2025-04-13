@@ -1,0 +1,20 @@
+{
+  "version": "2.2.0",
+  "releaseDate": "11/04/2025",
+  "themes": [
+    {
+      "id": 1,
+      "name": "I Speak Café French tests",
+      "description": "Writing, Reading and Listening skills for the Café environment.",
+      "icon": "fas fa-coffee",
+      "quizzes": [
+        { "id": 101, "name": "Writing and Reading Café", "description": "Test your writing and reading skills." },
+        { "id": 102, "name": "Writing and Reading Conversation Café", "description": "Practice conversations." },
+        { "id": 103, "name": "Listening Café", "description": "Improve your listening comprehension." },
+        { "id": 104, "name": "Listening Conversation Café", "description": "Practice understanding real conversations." },
+        { "id": 105, "name": "Writing, Reading & Listening Café", "description": "Combined skills practice." }
+      ]
+    }
+    // Ajoute d'autres thèmes ici si nécessaire
+  ]
+}
